@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP 算法全景可视化学习平台</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <header class="header">
+        <h2 style="margin:0; margin-right: 20px;">DP 可视化全家桶</h2>
+        <button v-for="tab in tabs" :key="tab.id" @click="currentTab = tab.id" :class="['nav-btn', { active: currentTab === tab.id }]">
+            {{ tab.name }}
+        </button>
+    </header>
+
+    <main class="container">
+        <div v-if="currentTab === 'basic'">
+            <h3>基础 DP：爬楼梯 (斐波那契数列)</h3>
+            <p><strong>规则：</strong>每次可以爬 1 阶或 2 阶，爬到第 $N$ 阶有多少种方法？方程: $dp[i] = dp[i-1] + dp[i-2]$</p>
+            <div class="controls">
+                <button @click="stepBasic" :disabled="basic.finished || basic.playing">下一步</button>
+                <button @click="playBasic" :disabled="basic.finished">{{ basic.playing ? '暂停' : '自动播放' }}</button>
+                <button @click="resetBasic">重置</button>
+            </div>
+            <div class="explanation-box" v-html="basic.text"></div>
+            <table class="dp-table">
+                <tr><th>楼梯阶数 $i$</th><th v-for="i in 8" :key="i">{{ i - 1 }}</th></tr>
+                <tr>
+                    <th>方法数 $dp[i]$</th>
+                    <td v-for="(val, i) in basic.dp" :key="i" :class="getBasicClass(i)">{{ val }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div v-if="currentTab === 'complete'">
+            <h3>完全背包问题 (物品可无限次使用)</h3>
+            <p><strong>核心区别：</strong>一维数组优化下，容量遍历必须是<strong>正序</strong>（从前向后），因为当前物品放入后，还可以继续放入！</p>
+            <p><strong>物品：</strong>体积[2, 3]，价值[3, 4] | <strong>背包容量：</strong>6</p>
+            <div class="controls">
+                <button @click="stepComplete" :disabled="comp.finished || comp.playing">下一步</button>
+                <button @click="playComplete" :disabled="comp.finished">{{ comp.playing ? '暂停' : '自动播放' }}</button>
+                <button @click="resetComplete">重置</button>
+            </div>
+            <div class="explanation-box" v-html="comp.text"></div>
+            <table class="dp-table">
+                <tr><th>容量 $w$</th><th v-for="w in 7" :key="w">{{ w - 1 }}</th></tr>
+                <tr>
+                    <th>价值 $dp[w]$</th>
+                    <td v-for="(val, w) in comp.dp" :key="w" :class="getCompClass(w)">{{ val }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div v-if="currentTab === 'advanced'">
+            <h3>多重背包与进阶技巧</h3>
+            <div class="problem-card">
+                <h4>二进制拆分原理</h4>
+                <p>任何一个数字都可以用 $1, 2, 4, 8...$ 等 2 的幂次方加上一个余数表示。从而将 $O(N)$ 复杂度降至 $O(\log N)$。</p>
+            </div>
+            <div class="code-block">
+// 多重背包的二进制拆分核心 C++ / JS 代码示例
+for(let i = 1; i <= n; i++) {
+    let weight = items[i].w, value = items[i].v, amount = items[i].s;
+    let k = 1; // 箱子容量
+    while(amount >= k) {
+        newItems.push({ w: weight * k, v: value * k });
+        amount -= k;
+        k *= 2;
+    }
+    if(amount > 0) newItems.push({ w: weight * amount, v: value * amount });
+}
+            </div>
+        </div>
+
+        <div v-if="currentTab === 'problems'">
+            <h3>🏆 进阶 DP 洛谷题单与解析</h3>
+            <div class="problem-card">
+                <h3>P1216 [IOI1994] 数字三角形 <a href="https://www.luogu.com.cn/problem/P1216" target="_blank">[前往作答]</a></h3>
+                <p><strong>考点：</strong> 基础网格 DP</p>
+            </div>
+            <div class="problem-card">
+                <h3>P1776 宝物筛选 <a href="https://www.luogu.com.cn/problem/P1776" target="_blank">[前往作答]</a></h3>
+                <p><strong>考点：</strong> 多重背包 + 二进制优化</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; color: #333; margin: 0; }
+.header { background: #2c3e50; color: white; padding: 1rem 2rem; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.nav-btn { background: transparent; border: 1px solid white; color: white; padding: 6px 12px; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+.nav-btn.active, .nav-btn:hover { background: #e74c3c; border-color: #e74c3c; }
+.container { max-width: 1000px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.controls { margin-bottom: 20px; display: flex; gap: 10px; background: #eef2f5; padding: 10px; border-radius: 6px; }
+button { padding: 8px 16px; cursor: pointer; border: none; border-radius: 4px; background: #3498db; color: white; font-weight: bold; }
+button:disabled { background: #bdc3c7; cursor: not-allowed; }
+button:hover:not(:disabled) { background: #2980b9; }
+.explanation-box { background: #fff3cd; padding: 15px; border-left: 5px solid #ffc107; border-radius: 4px; margin-bottom: 20px; min-height: 60px; line-height: 1.6;}
+.dp-table { border-collapse: collapse; width: 100%; text-align: center; margin-top: 10px; }
+.dp-table th, .dp-table td { border: 1px solid #dee2e6; padding: 12px; min-width: 40px; transition: all 0.3s; }
+.dp-table th { background-color: #f8f9fa; }
+.active-cell { background-color: #ffeeba !important; border: 2px solid #ffc107 !important; transform: scale(1.05); font-weight: bold; }
+.dependency-cell { background-color: #d4edda !important; border: 2px dashed #28a745 !important; }
+.code-block { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; font-family: monospace; white-space: pre-wrap; text-align: left;}
+.problem-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 6px; border-left: 4px solid #3498db; }
+.problem-card a { color: #e74c3c; text-decoration: none; font-weight: bold; }
